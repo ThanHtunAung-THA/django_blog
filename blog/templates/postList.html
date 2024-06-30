@@ -5,8 +5,8 @@ Post List
 
 {% block body %}
 
-  <div class="container mt-5">
-    <h1 class="mb-4">Post Link</h1>
+  <div class="container mb-5" style="margin-top: 5rem;">
+    <h1 class="mb-4">Post List</h1>
     {% for post in posts %}
     <div class="card mb-4">
       <div class="card-body" onclick="window.location = '/blog/detail/{{ post.id }}/'">
