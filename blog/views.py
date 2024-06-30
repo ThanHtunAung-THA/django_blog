@@ -21,6 +21,7 @@ def post_create(request):
     created_at = request.POST.get('created')
     )
     posts.save()
+    messages.success(request, "The post has been created successfully.")
     return redirect('/blog/')
 
 #post Detail
@@ -41,6 +42,7 @@ def post_update(request, post_id):
         if created_at_str:
             post.created_at = datetime.datetime.strptime(created_at_str, '%Y-%m-%dT%H:%M')
         post.save()
+        messages.success(request, "The post has been updated successfully.")
         return redirect('/blog/')
 
 #post delete
@@ -49,3 +51,26 @@ def post_delete(request, post_id):
     posts.delete()
     messages.success(request, "The post has been deleted successfully.")
     return redirect('/blog/')
+
+#log in
+from django.contrib.auth import authenticate, login, logout
+
+def login_view(request):
+  if request.method == "GET":
+    return render(request, 'login.html')
+  if request.method == "POST":
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    user = authenticate(username = username, password = password)
+    if user is not None:
+      login(request, user)
+      messages.success(request, "you are now logged in as "+ username)
+      return redirect('/blog/')
+    else:
+      messages.error(request, "username or password is incorrect!")
+      return render(request, 'login.html')
+
+#log out
+def logout_view(request):
+  logout(request)
+  return redirect('/login/')
