@@ -1,8 +1,10 @@
+{% load static %}
 <html>
 <head>
 <title> Login Form </title>
 </head>
 <body>
+  <img src="{% static 'imgs/login-img.jpg' %}" alt="" srcset="">
   <div class="container my-5">
     {% if messages %}
       {% for message in messages %}
