@@ -3,7 +3,7 @@ from blog.models import PostModel
 from django.contrib import messages
 import datetime
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 # Create your views here.
 # view
@@ -13,7 +13,8 @@ def post_list(request):
   return render(request, 'postList.html', {"posts" : posts})
 
 # create
-@login_required(login_url='login')
+# @login_required(login_url='login')
+@permission_required('blog.add_postmodel', login_url = 'login')
 def post_create(request):
   if request.method == "GET":
     return render(request, 'postCreate.html')
