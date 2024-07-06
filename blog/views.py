@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from blog.models import PostModel
 from django.contrib import messages
 import datetime
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 # view
@@ -11,6 +13,7 @@ def post_list(request):
   return render(request, 'postList.html', {"posts" : posts})
 
 # create
+@login_required(login_url='login')
 def post_create(request):
   if request.method == "GET":
     return render(request, 'postCreate.html')
@@ -25,11 +28,13 @@ def post_create(request):
     return redirect('/blog/')
 
 #post Detail
+@login_required(login_url='login')
 def post_detail(request, post_id):
     posts = PostModel.objects.get(id=post_id)
     return render(request, 'postDetail.html', {"posts":posts})
 
 #post Update
+@login_required(login_url='login')
 def post_update(request, post_id):
     post = get_object_or_404(PostModel, id=post_id)
     if request.method == "GET":
@@ -46,6 +51,7 @@ def post_update(request, post_id):
         return redirect('/blog/')
 
 #post delete
+@login_required(login_url='login')
 def post_delete(request, post_id):
     posts = PostModel.objects.filter(id = post_id)
     posts.delete()
@@ -53,7 +59,7 @@ def post_delete(request, post_id):
     return redirect('/blog/')
 
 #log in
-from django.contrib.auth import authenticate, login, logout
+# from django.contrib.auth import authenticate, login, logout
 
 def login_view(request):
   if request.method == "GET":
@@ -71,6 +77,7 @@ def login_view(request):
       return render(request, 'login.html')
 
 #log out
+@login_required(login_url='login')
 def logout_view(request):
   logout(request)
   return redirect('/login/')
