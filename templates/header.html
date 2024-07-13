@@ -9,15 +9,29 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/blog/create/">Create</a>
         </li>
+
+          <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          cat 1
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" >cat 1</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="">cat 2</a></li>
+          </ul>
+          </li>
+          
+
+
         {% if user.is_authenticated %}
           <li class="nav-item dropdown">
           <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           {{ user.username }}
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" >{{ user.email }}</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="/blog/logout/">Log Out</a></li>
+            <li><a class="dropdown-item" >{{ user.email }}</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/blog/logout/">Log Out</a></li>
           </ul>
           </li>
           {% else %}
@@ -26,10 +40,7 @@
           </li>
         {% endif %}
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+
     </div>
   </div>
 </nav>

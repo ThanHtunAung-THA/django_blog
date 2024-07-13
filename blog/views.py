@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from blog.models import PostModel
+from blog.models import PostModel, CategoryModel
 from django.contrib import messages
 import datetime
 from django.contrib.auth import authenticate, login, logout
@@ -17,12 +17,17 @@ def post_list(request):
 @permission_required('blog.add_postmodel', login_url = 'login')
 def post_create(request):
   if request.method == "GET":
-    return render(request, 'postCreate.html')
+    category = CategoryModel.objects.all()
+    return render(request, 'postCreate.html', {"category":category})
   if request.method == "POST":
     posts = PostModel.objects.create(
     title = request.POST.get('title'),
     body = request.POST.get('body'),
-    created_at = request.POST.get('created')
+    category_id = request.POST.get('category'),
+    image = request.FILES.get('image'),
+    author_id = request.user.id,
+    # created_at = request.POST.get('created')
+    # created_at = datetime.now()
     )
     posts.save()
     messages.success(request, "The post has been created successfully.")
